@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Player;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -22,7 +21,12 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        return response()->json($this->player->all(['id', 'first_name', 'second_name']));
+        $players = $this->player->all(['id', 'first_name', 'second_name'])
+            ->each
+            ->append('full_name')
+            ->makeHidden(['first_name', 'second_name']);
+
+        return response()->json($players);
     }
 
     /**
