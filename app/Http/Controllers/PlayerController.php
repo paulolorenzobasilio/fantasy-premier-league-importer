@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Player;
-use Illuminate\Http\Request;
 
 class PlayerController extends Controller
 {
@@ -27,17 +26,6 @@ class PlayerController extends Controller
             ->makeHidden(['first_name', 'second_name']);
 
         return response()->json($players);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
