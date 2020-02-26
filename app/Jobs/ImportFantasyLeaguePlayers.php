@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Contracts\Parser\ParserFactory;
 use App\Player;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\QueryException;
@@ -25,28 +27,31 @@ class ImportFantasyLeaguePlayers implements ShouldQueue
     public function handle()
     {
         $headers = ['Accept' => 'application/json'];
-        $request = Requests::get('https://fantasy.premierleague.com/api/bootstrap-static/', $headers);
-        $players = collect(json_decode($request->body)->elements);
-        
-        try {
-            DB::transaction(function () use ($players) {
-                Player::truncate();
+        $request = Requests::get(
+            'https://fantasy.premierleague.com/api/bootstrap-static/',
+            $headers
+        );
+        $importer = ParserFactory::getParserType($request->body);
+        $data = $importer->parse();
 
-                $players->each(function ($player) {
-                    Player::create([
-                        'first_name' => $player->first_name,
-                        'second_name' => $player->second_name,
-                        'form' => $player->form,
-                        'total_points' => $player->total_points,
-                        'influence' => $player->influence,
-                        'creativity' => $player->creativity,
-                        'threat' => $player->threat,
-                        'ict_index' => $player->ict_index
-                    ]);
-                });
+        try {
+            DB::transaction(function () use ($data) {
+                Player::truncate();
+                Player::insert($data);
             });
         } catch (QueryException $ex) {
-            Log::error($ex->getMessage());    
+            Log::error($ex->getMessage());
         }
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        Log::error($exception->getMessage());
     }
 }
