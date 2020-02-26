@@ -8,6 +8,7 @@ Imports player data from fantasy league site.
 
 * Composer
 * PHP
+* Setup your cron (depending on machine)
 
 ### Installing
 
