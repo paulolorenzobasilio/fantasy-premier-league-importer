@@ -38,14 +38,21 @@ touch database/database.sqlite
 php artisan migrate --seed
 ```
 
-Setup task scheduler. Copy paste this contents in your crontab
+Setup task scheduler. Copy and paste this in your crontab and make sure your project path is absolute path. e.g. /home/user1/Documents/fantasy-premier-league-importer.
 ```
+crontab -e
+
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 After updating the crontab. Restart your cron.
 ```
 sudo service cron restart
+```
+
+Check its status it should be active
+```
+sudo service cron status
 ```
 
 Always turn on your queue for the task scheduler for import fantasty league to work.
