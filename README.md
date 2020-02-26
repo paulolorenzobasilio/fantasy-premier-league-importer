@@ -43,6 +43,11 @@ Setup task scheduler. Copy paste this contents in your crontab
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
+Always turn on your queue for the task scheduler for import fantasty league to work.
+```
+php artisan queue:work --tries=3
+```
+
 ## Running the tests
 ```
 vendor/bin/phpunit
