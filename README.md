@@ -22,31 +22,9 @@ install dependencies
 composer install
 ```
 
-configure the project environment
+setup the project environment
 ```
-touch .env
-```
-Paste this into your .env
-```
-APP_NAME=Laravel
-APP_ENV=local
-APP_KEY=
-APP_DEBUG=true
-APP_URL=http://localhost
-
-LOG_CHANNEL=stack
-
-DB_CONNECTION=sqlite
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USERNAME=root
-DB_PASSWORD=
-
-BROADCAST_DRIVER=log
-CACHE_DRIVER=file
-QUEUE_CONNECTION=database
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
+cp .env.example .env
 ```
 
 generate your own application key
