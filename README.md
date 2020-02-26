@@ -44,6 +44,7 @@ crontab -e
 
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
+By default the import of task scheduler runs every hour.
 
 After updating the crontab. Restart your cron.
 ```
@@ -66,6 +67,7 @@ vendor/bin/phpunit
 ```
 
 ## To run import fantasy-league command
+This will immediately import and store the data.
 ```
 php artisan import:fantasy-league
 ```
