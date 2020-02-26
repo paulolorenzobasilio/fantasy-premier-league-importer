@@ -40,8 +40,7 @@ php artisan migrate --seed
 
 Setup task scheduler. Copy paste this contents in your crontab
 ```
-crontab (* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1)
-&& queue:work
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## Running the tests
